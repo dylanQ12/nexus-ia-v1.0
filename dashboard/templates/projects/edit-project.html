@@ -1,0 +1,53 @@
+{% extends 'Dashboard/dashboard.html' %}
+
+{% block content %}
+<br>
+<div class="d-flex align-items-center justify-content-center mb-4">
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
+            <h4 class="text-center mb-4">Editar Proyecto</h4>
+            <form method="post" action="{% url 'editar-proyecto' project.id %}"" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="foto">Foto</label>
+                    <br><img class="mb-3" src="{{ project.foto.url }}" alt="{{ project.titulo }}" width="100">
+                    <input class="form-control form-control-lg" id="formFileLg" name="foto" type="file">
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="titulo" value="{{ project.titulo }}" id="floatingInput"
+                        placeholder="Escriba un título" required>
+                    <label for="titulo">Título</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="enlace" value="{{ project.enlace }}" id="floatingInput"
+                        placeholder="Escriba el link del video" required>
+                    <label for="titulo">Link del video</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" name="desc" placeholder="Escriba una descripción"
+                        id="desc" style="height: 150px;" rows="5" required>{{ project.descripcion }}</textarea>
+                    <label for="floatingTextarea">Descripción</label>
+                </div>
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="estado" name="estado" {% if project.estado %}checked{% endif %}>
+                    <label class="form-check-label" for="estado">Activo</label>
+                </div>
+                
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-sync"></i> Actualizar</button>
+                    <a class="btn btn-danger" href="{% url 'proyectos' %}"><i class="fas fa-times"></i> Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

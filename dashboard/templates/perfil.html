@@ -1,0 +1,46 @@
+{% extends 'Dashboard/dashboard.html' %}
+
+
+{% block content %}
+
+<br>
+<div class="d-flex align-items-center justify-content-center mb-4">
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
+            
+            {% if messages %}
+              {% for message in messages %}
+                 <div class="alert alert-{{ message.tags }}" role="alert">
+                     {{ message }}
+                 </div>
+              {% endfor %}
+            {% endif %} 
+            
+            <h4 class="text-center mb-4">Mi Perfil</h4>
+            <form method="post" action="{% url 'perfil' %}">
+                {% csrf_token %}
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="email" value="{{ user.email }}"
+                       placeholder="Escriba su Email">
+                    <label for="titulo">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="password"
+                       placeholder="Escriba nuevo Password" required>
+                    <label for="titulo">Cambiar Password</label>
+                </div>
+                
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Cambios</button>
+                    <a class="btn btn-danger" href="{% url 'servicios' %}"><i class="fas fa-times"></i> Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

@@ -1,0 +1,216 @@
+<!-- base -->
+{% extends 'base.html' %} {% load static %}
+
+<!-- Facts -->
+{% block fact %}{% endblock fact %}
+
+<!-- About -->
+{% block about %}
+<div class="container-fluid py-5 my-5" id="about">
+    <div class="container pt-5">
+        <div class="row g-5">
+            <div class="col-lg-5 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".3s">
+                <div class="h-100 position-relative">
+                    <img src="{% static 'img/about-5.webp' %}" class="img-fluid w-75 rounded" alt=""
+                        style="margin-bottom: 25%" />
+                    <div class="position-absolute w-75" style="top: 25%; left: 25%">
+                        <img src="{% static 'img/about-3.webp' %}" class="img-fluid w-100 rounded" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".5s">
+                <h5 class="text-primary">Nosotros</h5>
+                <h1 class="mb-4">¡Traemos Soluciones Técnologicas Innovadoras!</h1>
+                <p style="text-align: justify">
+                    Nuestra misión es impulsar la transformación digital de las
+                    empresas, permitiéndoles aprovechar el poder de la tecnología para
+                    alcanzar y superar sus objetivos comerciales. Nos esforzamos por ser
+                    líderes en la creación de soluciones innovadoras que habiliten a
+                    nuestros clientes a destacarse en un mercado cada vez más competitivo.
+                    Creemos que el éxito en el entorno digital de hoy en día requiere de
+                    una combinación de visión estratégica, creatividad y tecnología de
+                    punta. Por ello, nos comprometemos a ofrecer diseños web que no sólo
+                    capturan la identidad única de cada cliente, sino que también
+                    proporcionan una experiencia de usuario excepcional. Nos dedicamos a
+                    desarrollar estrategias de marketing digital personalizadas que
+                    amplifiquen la presencia online de nuestros clientes, aumentando su
+                    alcance y conectándolos con su audiencia de maneras significativas y
+                    duraderas.
+                    La visión de Nexus se centra en ser la vanguardia de la innovación
+                    tecnológica, proporcionando soluciones digitales que no solo anticipan
+                    las tendencias del mercado, sino que también establecen nuevas normas
+                    en la industria. Nos vemos como catalizadores del cambio, empoderando
+                    a las empresas con herramientas digitales avanzadas y estrategias
+                    disruptivas que llevan sus operaciones a nuevos horizontes de
+                    eficiencia y éxito.
+                </p>
+                <!-- <a href="" class="btn btn-secondary rounded-pill px-5 py-3 text-white">Más Detalles</a> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock about %}
+
+<!-- Services -->
+{% block services %}
+<div class="container-fluid services py-5 mb-5" id="services">
+    <div class="container">
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px">
+            <h5 class="text-primary">Servicios</h5>
+            <h1>¡Nuestros Servicios!</h1>
+        </div>
+        <div class="row g-5 services-inner">
+            {% for service in services %}
+            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".3s">
+                <div class="services-item bg-light">
+                    <div class="p-4 text-center services-content">
+                        <div class="services-content-icon">
+                            <img src="{{ service.foto.url }}" class="img-fluid w-100 rounded mb-3"
+                                alt="{{ service.titulo }}" />
+                            <h4 class="mb-3">{{ service.titulo }}</h4>
+                            <p style="text-align: justify" class="mb-4">
+                                {{ service.descripcion }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock services %}
+
+<!-- Projects -->
+{% block modal_projects %}
+<!-- Modal Structure -->
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01" />
+    <div id="caption"></div>
+</div>
+{% endblock modal_projects %}
+
+
+{% block projects %}
+<div class="container-fluid project py-5 mb-5" id="projects">
+    <div class="container">
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px">
+            <h5 class="text-primary">Proyectos</h5>
+            <h1>¡Construimos Proyectos Específicos para su Negocio!</h1>
+        </div>
+        <div class="row g-5">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".3s">
+                <div class="project-item">
+                    <div class="project-img">
+                        <img src="{{ project.foto.url }}" class="img-fluid w-100 rounded" alt="{{ project.titulo }}" />
+                        <div class="project-content">
+                            <a href="{{ project.enlace }}"" class="text-center">
+                                <h4 class="text-white bold">{{ project.titulo }}</h4>
+                                <p class="m-0 text-white">{{ project.descripcion|truncatewords:10 }}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock projects %}
+
+
+{% block contact %}
+<!-- Contact Start -->
+<div class="container-fluid py-5 mb-5" id="contact">
+    <div class="container">
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px">
+            <h1 class="mb-3">Contacto</h1>
+        </div>
+        
+        {% if messages %}
+          <div class="alert alert-success" role="alert">
+             {% for message in messages %}
+             {{ message }}
+             {% endfor %}
+          </div>
+        {% endif %}
+        
+        <div class="contact-detail position-relative p-5">
+            <div class="row g-5 mb-5 justify-content-center">
+                <div class="col-xl-4 col-lg-6 wow fadeIn" data-wow-delay=".3s">
+                    <div class="d-flex bg-light p-3 rounded">
+                        <div class="flex-shrink-0 btn-square bg-secondary rounded-circle"
+                            style="width: 64px; height: 64px">
+                            <i class="fas fa-map-marker-alt text-white"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="text-primary">Dirección</h4>
+                            <p target="_blank" class="h5">Santa Rosa, Ecuador</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 wow fadeIn" data-wow-delay=".5s">
+                    <div class="d-flex bg-light p-3 rounded">
+                        <div class="flex-shrink-0 btn-square bg-secondary rounded-circle"
+                            style="width: 64px; height: 64px">
+                            <i class="fa fa-phone text-white"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="text-primary">N. de Celular</h4>
+                            <p class="h5" target="_blank">098 798 2307</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 wow fadeIn" data-wow-delay=".7s">
+                    <div class="d-flex bg-light p-3 rounded">
+                        <div class="flex-shrink-0 btn-square bg-secondary rounded-circle"
+                            style="width: 64px; height: 64px">
+                            <i class="fa fa-envelope text-white"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="text-primary">Email</h4>
+                            <p class="h5" target="_blank">marioqm55555@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 wow fadeIn" data-wow-delay=".5s">
+                    <div class="p-5 rounded contact-form">
+                        <form method="post" action="{% url 'home' %}">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <input type="text" class="form-control border-0 py-3" name="nombre"
+                                    placeholder="Su Nombre" required />
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" class="form-control border-0 py-3" name="apellido"
+                                    placeholder="Su Apellido" required />
+                            </div>
+                            <div class="mb-4">
+                                <input type="email" class="form-control border-0 py-3" name="email"
+                                    placeholder="Su Email" required />
+                            </div>
+                            <div class="mb-4">
+                                <textarea class="w-100 form-control border-0 py-3" name="mensaje" rows="6"
+                                    placeholder="Mensaje" required></textarea>
+                            </div>
+                            <div class="text-start">
+                                <button type="submit" class="btn bg-primary text-white py-3 px-5" type="button">
+                                    Enviar Mensaje
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contact %}
+
+{% block modal_js %}
+
+{% endblock modal_js %}

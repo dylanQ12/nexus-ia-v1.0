@@ -1,0 +1,44 @@
+{% extends 'Dashboard/dashboard.html' %}
+
+{% block content %}
+<br>
+<div class="d-flex align-items-center justify-content-center mb-4">
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
+            <h4 class="text-center mb-4">Editar Servicio</h4>
+            <form method="post" action="{% url 'editar-servicio' service.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="foto">Foto</label>
+                    <br><img class="mb-3" src="{{ service.foto.url }}" alt="{{ service.titulo }}" width="100">
+                    <input class="form-control form-control-lg" id="formFileLg" name="foto" type="file">
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="titulo" value="{{ service.titulo }}" id="floatingInput"
+                        placeholder="Escriba un título" required>
+                    <label for="titulo">Título</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" name="desc" placeholder="Escriba una descripción"
+                        id="desc" style="height: 150px;" rows="5" required>{{ service.descripcion }}</textarea>
+                    <label for="floatingTextarea">Descripción</label>
+                </div>
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="servicioEstado" name="estado" {% if service.estado %}checked{% endif %}>
+                    <label class="form-check-label" for="servicioEstado">Activo</label>
+                </div>
+    
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-sync"></i> Actualizar</button>
+                    <a class="btn btn-danger" href="{% url 'servicios' %}"><i class="fas fa-times"></i> Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

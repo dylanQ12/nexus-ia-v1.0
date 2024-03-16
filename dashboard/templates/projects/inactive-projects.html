@@ -1,0 +1,117 @@
+{% extends 'Dashboard/dashboard.html' %} 
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="mb-3">
+        <h3 class="text-center">Proyectos Inactivos</h3>
+    </div>
+
+    <div class="bg-light text-center rounded p-4">
+
+        <div class="table-responsive">
+            <table class="table text-center align-middle table-bordered table-striped mb-0 display" id="tablaProyectosIanctivos">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col">#</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">F. Creación</th>
+                        <th scope="col">F. Modificación</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <img src="{{ project.foto.url }}" alt="{{ project.titulo }}" width="100">
+                        </td>
+                        <td>{{ project.titulo }}</td>
+                        <td>{{ project.descripcion }}</td>
+                        <td>{{ project.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                        <td>{{ project.fecha_modificacion|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if  project.estado == 1 %}
+                              <span class="badge bg-primary text-white shadow-sm">Activo</span>
+                            {% elif  project.estado == 0 %}
+                              <span class="badge bg-danger text-white shadow-sm">Inactivo</span>
+                            {% endif %}  
+                        </td>
+                        <td>
+                            <form action="{% url 'activar-proyecto' project.id %}" method="post" style="display: inline-block;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-primary btn-block"><i class="fas fa-power-off"></i> Activar</button>
+                            </form>
+                            <form action="{% url 'eliminar-proyecto' project.id %}" method="post" style="display: inline-block;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger btn-block"><i class="fas fa-trash"></i> Eliminar</button>
+                            </form>
+                        </td>
+                        {% empty %}
+                        <tr>
+                            <td class="text-center" colspan="8">No hay Proyectos Inactivos.</td>
+                        </tr>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block datatables_js %} 
+<script>
+    $(document).ready( function () {
+        $('#tablaProyectosIanctivos').DataTable({
+            "responsive": true,
+            "language": {
+                "decimal": "",
+                "emptyTable": "No hay datos disponibles en la tabla",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                "infoFiltered": "(filtrado de _MAX_ entradas totales)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "No se encontraron registros coincidentes",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "aria": {
+                    "sortAscending": ": activar para ordenar la columna ascendente",
+                    "sortDescending": ": activar para ordenar la columna descendente"
+                }
+            },
+            "columnDefs": [{
+                "targets": "_all",
+                "defaultContent": "" // Esto evitará los errores para datos nulos
+            }]
+        });
+    });
+</script>
+
+{% endblock datatables_js %}
+
+{% block footer %}{% endblock footer %}
